@@ -338,6 +338,9 @@
       <button class="time-btn" data-range="7">7D</button>
       <button class="time-btn" data-range="30">1M</button>
       <button class="time-btn active" data-range="90">3M</button>
+      <button class="time-btn" data-range="180">6M</button>
+      <button class="time-btn" data-range="365">1Y</button>
+      <button class="time-btn" data-range="0">All</button>
     </div>
     <div class="chart-toggles" id="chartToggles"></div>
   </div>
@@ -420,9 +423,11 @@ function getActiveTokens() {
 // ============================================================
 // DATA LOADING
 // ============================================================
+const CG_API_KEY = 'CG-7moJEcuT4jAjDFCLKgA3BqpT';
+
 async function fetchTokenHistory(cgId, days) {
   const d = days === 0 ? 'max' : days;
-  const url = `https://api.coingecko.com/api/v3/coins/${cgId}/market_chart?vs_currency=usd&days=${d}&interval=daily`;
+  const url = `https://api.coingecko.com/api/v3/coins/${cgId}/market_chart?vs_currency=usd&days=${d}&interval=daily&x_cg_demo_api_key=${CG_API_KEY}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   return await res.json();
@@ -484,7 +489,7 @@ function setStatus(mode) {
     badge.querySelector('.status-dot').style.background = '#F59E0B';
     text.textContent = 'Sample Data';
     note.style.display = 'flex';
-    noteText.innerHTML = 'Showing sample data (Feb 2026 snapshot). Live CoinGecko data loads automatically when deployed.';
+    noteText.innerHTML = 'Showing sample data (Feb 2026 snapshot). Live CoinGecko data will load automatically when deployed to a public URL.';
   }
 }
 
